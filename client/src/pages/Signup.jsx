@@ -16,6 +16,7 @@ export default function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.username || !formData.email || !formData.password) {
+      setLoading(false);
       return setErrorMessage('Please fill all fields');
     }
     try {
@@ -37,8 +38,10 @@ export default function Signup() {
     } catch (error) {
       setErrorMessage(error.message);
       setLoading(false);
-    }
+    }finally {
+      setLoading(false);  // Ensure loading is turned off after all operations
   }
+  };
 
   return (<div className='min-h-screen mt-20'>
     <div className="flex p-3 max-w-3xl mx-auto flex-col md:flex-row md:items-center gap-5">
@@ -76,8 +79,8 @@ export default function Signup() {
                   <Spinner size='sm'/>
                   <span className='pl-3'>Loading...</span>
                 </>
-              ): 'Sign Up'
-            }
+              ):( 'Sign Up'
+            )}
           </Button>
         </form>
         <div className='flex gap-2 text-sm mt-5'>

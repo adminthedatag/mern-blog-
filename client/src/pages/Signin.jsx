@@ -16,7 +16,9 @@ export default function SignIn() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.email || !formData.password) {
+      setLoading(false);
       return setErrorMessage('Please fill all fields');
+
     }
     try {
       setLoading(true);
@@ -37,8 +39,11 @@ export default function SignIn() {
     } catch (error) {
       setErrorMessage(error.message);
       setLoading(false);
-    }
+
+    }finally {
+      setLoading(false);  // Ensure loading is turned off after all operations
   }
+  };
 
   return (<div className='min-h-screen mt-20'>
     <div className="flex p-3 max-w-3xl mx-auto flex-col md:flex-row md:items-center gap-5">
@@ -63,7 +68,7 @@ export default function SignIn() {
           </div>
           <div>
             <Label value='Your Password' />
-            <TextInput type='password' placeholder='***********' id='password' onChange={handleChange} />  
+            <TextInput type='password' placeholder='***************' id='password' onChange={handleChange} />  
           </div>
           <Button gradientDuoTone='purpleToPink' type='submit' disabled={loading}>
             {
@@ -72,8 +77,8 @@ export default function SignIn() {
                   <Spinner size='sm'/>
                   <span className='pl-3'>Loading...</span>
                 </>
-              ): 'Sign In'
-            }
+              ): ('Sign In'
+            )}
           </Button>
         </form>
         <div className='flex gap-2 text-sm mt-5'>
